@@ -44,7 +44,7 @@ var defaults = {
     startClass: 'lg-start-zoom',
     backdropDuration: 150,
 
-    // Set 0, if u don't want to hide the controls 
+    // Set 0, if u don't want to hide the controls
     hideBarsDelay: 6000,
 
     useLeft: false,
@@ -281,20 +281,20 @@ Plugin.prototype.build = function(index) {
             utils.addClass(_this.outer, 'lg-hide-items');
         }, _this.s.hideBarsDelay);
         utils.on(_this.outer, 'mousemove.lg click.lg touchstart.lg', function() {
-            
+
             // Cancel initalHideBarTimout if user uses mouse or touch events
             // Before it fires
             clearTimeout(initialHideBarTimeout);
-            
+
             utils.removeClass(_this.outer, 'lg-hide-items');
-    
+
             clearTimeout(_this.hideBartimeout);
-    
+
             // Timeout will be cleared on each slide movement also
             _this.hideBartimeout = setTimeout(function() {
                 utils.addClass(_this.outer, 'lg-hide-items');
             }, _this.s.hideBarsDelay);
-    
+
         });
     }
 
@@ -313,7 +313,7 @@ Plugin.prototype.structure = function() {
 
     // Create gallery items
     for (i = 0; i < this.items.length; i++) {
-        list += '<div class="lg-item"></div>';
+        list += '<div class="lg-item"><div class="lg-custom-loader" style="position: absolute;background: url(' + this.items[i].thumb + ');top:0;left:0;transform:translateX(50%) translateY(50%);height:50%;width:50%;background-size:cover;"></div></div>';
     }
 
     // Create controlls
@@ -348,6 +348,7 @@ Plugin.prototype.structure = function() {
     this.outer = document.querySelector('.lg-outer');
     this.outer.focus();
     this.___slide = this.outer.querySelectorAll('.lg-item');
+    this.___customLoader = this.outer.querySelectorAll('.lg-custom-loader');
 
     if (this.s.useLeft) {
         utils.addClass(this.outer, 'lg-use-left');
@@ -753,6 +754,7 @@ Plugin.prototype.loadContent = function(index, rec, delay) {
 
         setTimeout(function() {
             utils.addClass(_this.___slide[index], 'lg-complete');
+            utils.addClass(_this.___customLoader[index], 'lg-empty-html');
 
             utils.trigger(_this.el, 'onSlideItemLoad', {
                 index: index,
