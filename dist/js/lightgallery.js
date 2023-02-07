@@ -1,5 +1,5 @@
 /**!
- * lightgallery.js | 1.4.1-beta.0 | October 29th 2020
+ * lightgallery.js | 1.4.1-beta.0 | February 7th 2023
  * http://sachinchoolur.github.io/lightgallery.js/
  * Copyright (c) 2016 Sachin N; 
  * @license GPLv3 
@@ -246,7 +246,7 @@
         startClass: 'lg-start-zoom',
         backdropDuration: 150,
 
-        // Set 0, if u don't want to hide the controls 
+        // Set 0, if u don't want to hide the controls
         hideBarsDelay: 6000,
 
         useLeft: false,
@@ -509,7 +509,7 @@
 
         // Create gallery items
         for (i = 0; i < this.items.length; i++) {
-            list += '<div class="lg-item"></div>';
+            list += '<div class="lg-item"><div class="lg-custom-loader" style="position: absolute;background: url(' + this.items[i].thumb + ');top:0;left:0;transform:translateX(50%) translateY(50%);height:50%;width:50%;background-size:cover;"></div></div>';
         }
 
         // Create controlls
@@ -530,6 +530,7 @@
         this.outer = document.querySelector('.lg-outer');
         this.outer.focus();
         this.___slide = this.outer.querySelectorAll('.lg-item');
+        this.___customLoader = this.outer.querySelectorAll('.lg-custom-loader');
 
         if (this.s.useLeft) {
             _lgUtils2.default.addClass(this.outer, 'lg-use-left');
@@ -929,6 +930,7 @@
 
             setTimeout(function () {
                 _lgUtils2.default.addClass(_this.___slide[index], 'lg-complete');
+                _lgUtils2.default.addClass(_this.___customLoader[index], 'lg-empty-html');
 
                 _lgUtils2.default.trigger(_this.el, 'onSlideItemLoad', {
                     index: index,
